@@ -1,0 +1,88 @@
+version: '3'
+
+services:
+  server:
+    image: itzg/minecraft-server
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    ports:
+      - 25565:25565
+    environment:
+      EULA: "TRUE"
+      MOD_PLATFORM: MODRINTH
+      MODRINTH_DOWNLOAD_DEPENDENCIES: required
+      MODRINTH_MODPACK: https://modrinth.com/modpack/adrenaline/version/1.26.0+1.21.1.fabric
+      MODRINTH_PROJECTS: |-
+        spark, 
+        chunky, 
+        alternate-current, 
+        fallingtree,
+        spawn-animations,
+        dynamic-lights,
+        additional-structures,
+        repurposed-structures-fabric,
+        qraftyfied,
+        datapack:unlock-all-recipes,
+        yggdrasil-structure,
+        mes-moogs-end-structures:NTIE4tE4,
+        structory-towers,
+        universal-graves,
+        towns-and-towers,
+        nemos-better-mending,
+        tidal-towns,
+        viabackwards,
+        mine-treasure,
+        viafabric:6DgogkJ3,
+        sparsestructures,
+        adrenaline-rush,
+        anti-xray,
+        view-distance-fix:beta,
+        remove-terralith-intro-message,
+        dungeons-and-taverns-stronghold-overhaul,
+        tectonic,
+        yungs-better-desert-temples,
+        yungs-bridges,
+        info-tools,
+        skinrestorer,
+        blood-moon,
+        infinity-cave:beta,
+        respawning-shulkers,
+        veinminer,
+        nullscape,
+        incendium:alpha,
+        spellbound-weapons,
+        datapack:the-expansion,
+        battle-towers,
+        datapack:saturated:beta
+      # Server properties
+      VIEW_DISTANCE: 12
+      SIMULATION_DISTANCE: 6
+      SPAWN_PROTECTION: 0
+      ONLINE_MODE: true 
+      SYNC_CHUNK_WRITES: false
+      DIFFICULTY: hard
+      SERVER_NAME: Interstellar Realms
+      MOTD: <*>-=\u00A7b\u00A7l\u00A7nInterstellar Realms\u00A7r=-<*>\u00A7r\n   \u00A7a RPG based vanilla+ and more              
+      MEMORY: "8G"  
+      RCON_CMDS_STARTUP:  |-
+        /gamerule doFireTick false
+        /team add New
+        /team add Old
+        /chunky radius 2000
+        /chunky start
+      RCON_CMDS_ON_CONNECT: |-
+        /team join New @a[team=]
+        /give @a[team=New] birch_boat
+        /team join Old @a[team=New]
+      RCON_CMDS_FIRST_CONNECT: |-
+        /chunky pause
+      RCON_CMDS_LAST_DISCONNECT: |-
+        /chunky continue
+    tty: TRUE
+    stdin_open: TRUE
+
+volumes:
+  data:
+    external: true
+    name: data
